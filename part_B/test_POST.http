@@ -1,9 +1,10 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
+authorization: bearer put_current_logged_in_user_jwt_here
 
 {
-  "author": "test author",
-  "url": "http://test",
-  "title": "test title"
+  "author": "test author4",
+  "url": "http://test4",
+  "title": "test title4"
 }
 

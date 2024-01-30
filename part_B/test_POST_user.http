@@ -3,6 +3,6 @@ content-type: application/json
 
 {
   "name": "user 7",
-  "username": "username7"
+  "username": "user7@blogapp.com"
 }
 
