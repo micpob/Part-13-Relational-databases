@@ -14,7 +14,6 @@ const blogFinder = async (req, res, next) => {
 
 const tokenExtractor = (req, res, next) => {
   const authorization = req.get('authorization')
-  console.log('AUTHORIZATION:', authorization)
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     try {
       req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
@@ -51,10 +50,15 @@ router.get('/:id', blogFinder, async (req, res) => {
   }
 })
 
-router.delete('/:id', blogFinder, async (req, res) => {
+router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
   if (req.blog) {
-    const result = await req.blog.destroy();
-    res.json(result)
+    const user = await User.findByPk(req.decodedToken.id)
+    if (req.blog.userId === user.id) {
+      const result = await req.blog.destroy();
+      res.json(result)
+    } else {
+      return res.status(401).json({ error: 'User is not authorized to delete blog' })
+    }
   } else {
     res.status(404).end()
   }

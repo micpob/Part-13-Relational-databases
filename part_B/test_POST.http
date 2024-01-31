@@ -3,8 +3,8 @@ content-type: application/json
 authorization: bearer put_current_logged_in_user_jwt_here
 
 {
-  "author": "test author4",
-  "url": "http://test4",
-  "title": "test title4"
+  "author": "test author8",
+  "url": "http://test8",
+  "title": "test title8"
 }
 

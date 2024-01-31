@@ -1,3 +1,5 @@
-DELETE  http://localhost:3001/api/blogs/6 HTTP/1.1
+DELETE  http://localhost:3001/api/blogs/12 HTTP/1.1
 content-type: application/json
+authorization: bearer put_current_logged_in_user_jwt_here
+
 
