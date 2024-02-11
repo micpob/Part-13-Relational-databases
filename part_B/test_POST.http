@@ -1,10 +1,10 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-authorization: bearer put_current_logged_in_user_jwt_here
+authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXI4QGJsb2dhcHAuY29tIiwiaWQiOjgsImlhdCI6MTcwNzIxOTk4Mn0.wJKsCNTzB__EtiB9FAziGfO0Y3x_ObRUL9fyz20WiKM
 
 {
-  "author": "test author8",
-  "url": "http://test8",
-  "title": "test title8"
+  "author": "author10",
+  "url": "http://test13",
+  "title": "test title 13"
 }
 
