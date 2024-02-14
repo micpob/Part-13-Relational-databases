@@ -32,6 +32,14 @@ module.exports = {
         allowNull: false,
         defaultValue: Sequelize.fn('now'),
         type: Sequelize.DATE
+      },
+      year: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            min: 1991,
+            max: new Date().getFullYear()
+        }
       }
     })
     await queryInterface.createTable('users', {
