@@ -1,11 +1,11 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imx1a2VAYmxvZ2FwcC5jb20iLCJpZCI6MSwiaWF0IjoxNzA3NzgwNTI0fQ.D1mRmXkhjSqMZAnkLdhnW449sgvGOnTiszgdTJCt0A0
+authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pa2lAYmxvZ2FwcC5jb20iLCJpZCI6MiwiaWF0IjoxNzA4MDE4MDY2fQ.0OJbejblEbzLT_rCa7BLfTnsp03-DPGs9AsfH0uWufs
 
 {
-  "author": "Test author 4",
-  "url": "test url 4",
-  "title": "test title 4",
-  "year": 2022
+  "author": "Test author 3",
+  "url": "test url 5",
+  "title": "test title 5",
+  "year": 2023
 }
 
