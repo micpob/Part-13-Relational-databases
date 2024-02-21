@@ -37,6 +37,7 @@ router.get('/:id', async (req, res) => {
         },
         include: {
           model: ReadingList,
+          where: req.query.read ? { read: req.query.read} : '',
           attributes: ['id', 'read']
         }
       },
