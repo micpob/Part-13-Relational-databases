@@ -1,9 +1,10 @@
 const { Model, DataTypes } = require('sequelize')
+
 const { sequelize } = require('../util/db')
 
-class ReadingList extends Model {}
+class Session extends Model {}
 
-ReadingList.init({
+Session.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -14,21 +15,15 @@ ReadingList.init({
     allowNull: false,
     references: { model: 'users', key: 'id' },
   },
-  blogId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: { model: 'blogs', key: 'id' },
-  },
-  read: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
-  },
+  token: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  }
 }, {
   sequelize,
   underscored: true,
   timestamps: false,
-  modelName: 'reading_list'
+  modelName: 'session'
 })
 
-module.exports = ReadingList
+module.exports = Session

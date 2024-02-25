@@ -2,6 +2,8 @@ const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
 const { ReadingList, User } = require('../models')
+const { tokenExtractor } = require('../util/tokenExtractor')
+const { sessionValidator } = require('../util/sessionValidator')
 
 const readingListFinder = async (req, res, next) => {
   try {
@@ -10,20 +12,6 @@ const readingListFinder = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-}
-
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-    } catch{
-      return res.status(401).json({ error: 'token invalid' })
-    }
-  }  else {
-    return res.status(401).json({ error: 'token missing' })
-  }
-  next()
 }
 
 router.post('/', async (req, res, next) => {
@@ -35,9 +23,9 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', tokenExtractor, readingListFinder, async (req, res, next) => {
+router.put('/:id', tokenExtractor, sessionValidator, readingListFinder, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.decodedToken.id)
+    const user = await User.findByPk(req.validSession.userIdid)
     if (req.readingList.userId === user.id) {
       req.readingList.read = req.body.read
       await req.readingList.save()

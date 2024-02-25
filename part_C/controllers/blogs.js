@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken')
 const router = require('express').Router()
-const { SECRET } = require('../util/config')
 const { Blog, User } = require('../models')
 const { Op } = require("sequelize");
+const { tokenExtractor } = require('../util/tokenExtractor')
+const { sessionValidator } = require('../util/sessionValidator')
 
 const blogFinder = async (req, res, next) => {
   try {
@@ -11,20 +11,6 @@ const blogFinder = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-}
-
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-    } catch{
-      return res.status(401).json({ error: 'token invalid' })
-    }
-  }  else {
-    return res.status(401).json({ error: 'token missing' })
-  }
-  next()
 }
 
 router.get('/', async (req, res) => {
@@ -60,11 +46,15 @@ router.get('/', async (req, res) => {
 })
 
 
-router.post('/', tokenExtractor, async (req, res, next) => {
+router.post('/', tokenExtractor, sessionValidator, async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.decodedToken.id)
-    const blog = await Blog.create({...req.body, userId: user.id})
-    return res.json(blog)
+    const user = await User.findByPk(req.validSession.userId)
+    if (user.disabled) {
+      return res.status(401).json({ error: 'This account is currently disabled' })
+    } else {
+      const blog = await Blog.create({...req.body, userId: user.id})
+      return res.json(blog)
+    }
   } catch(error) {
     next(error)
   }
@@ -78,9 +68,9 @@ router.get('/:id', blogFinder, async (req, res) => {
   }
 })
 
-router.delete('/:id', blogFinder, tokenExtractor, async (req, res) => {
+router.delete('/:id', blogFinder, tokenExtractor, sessionValidator, async (req, res) => {
   if (req.blog) {
-    const user = await User.findByPk(req.decodedToken.id)
+    const user = await User.findByPk(req.validSession.userId)
     if (req.blog.userId === user.id) {
       const result = await req.blog.destroy();
       res.json(result)

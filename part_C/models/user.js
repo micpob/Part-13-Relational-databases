@@ -29,6 +29,11 @@ User.init({
   updatedAt: {
       field: 'updated_at',
       type: Sequelize.DATE,
+  },
+  disabled: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false    
   }
 }, {
   sequelize,

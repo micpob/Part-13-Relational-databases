@@ -1,11 +1,11 @@
 POST http://localhost:3001/api/blogs HTTP/1.1
 content-type: application/json
-authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pa2lAYmxvZ2FwcC5jb20iLCJpZCI6MiwiaWF0IjoxNzA4MDE4MDY2fQ.0OJbejblEbzLT_rCa7BLfTnsp03-DPGs9AsfH0uWufs
+authorization: bearer put_current_logged_in_user_jwt_here
 
 {
-  "author": "Test author 3",
-  "url": "test url 5",
-  "title": "test title 5",
+  "author": "Test author",
+  "url": "test url",
+  "title": "test title",
   "year": 2023
 }
 
